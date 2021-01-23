@@ -41,6 +41,14 @@ const Entries = (props) => {
 
   return <table>
     <tbody>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>multi</th>
+      </tr>
     {filteredEntries.map((entry) => {
       return <Entry key={entry} numbers={entry} />
     })}
@@ -73,7 +81,8 @@ const App = () => {
       <h1>IPU lotto</h1>
       <p>Enter the numbers as they are drawn to filter down the list. Does not filter on the multiplier ball.</p>
       <SearchForm filterValue={currentFilter} clearHandler={clearFilters} changeHandler={changeHandler} submitHandler={submitHandler}/>
-      <Entries entries={entries} filters={[...filters, currentFilter]}/>
+      {/* <Entries entries={entries} filters={[...filters, currentFilter]}/> // this causes flashing during typing, so disabled for now*/} 
+      <Entries entries={entries} filters={filters}/>
       <Filters filters={filters} currentFilter={currentFilter}/>
     </div>
   );
