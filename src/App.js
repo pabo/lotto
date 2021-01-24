@@ -4,7 +4,7 @@ import {useState} from 'react';
 
 const SearchForm = (props) => {
   return <form onSubmit = {props.submitHandler}>
-    <input type='text' onChange={props.changeHandler} value={props.filterValue}></input>
+    <input type='text' placeholder="add" onChange={props.changeHandler} value={props.filterValue}></input>
     <input type='button' value='Clear Filters' onClick={props.clearHandler}></input>
   </form>
 }
@@ -12,15 +12,13 @@ const SearchForm = (props) => {
 const Filters = (props) => {
   return <div className='filters'>
     <h3>Filters</h3>
-    {props.numbers.length ?
-      <NumberCards handleCardClick={props.handleCardClick} {...props} /> :
-      <span>(none)</span>
-    }
+      <NumberCards handleCardClick={props.handleCardClick} {...props} />
+      <SearchForm {...props}/>
   </div>
 }
 
 const NumberCards = (props) => {
-  return <div>
+  return <div className="number-cards">
     {props.numbers.map((number) => {
       return <NumberCard {...props}  number={number} />
     })}
@@ -47,7 +45,7 @@ const Entries = (props) => {
     })
   }) 
 
-  return <div>
+  return <div className='entries'>
     <h3>Entries</h3>
     { filteredEntries.length ? 
       filteredEntries.map((entry) => {
@@ -98,13 +96,19 @@ const App = () => {
       <h1>IPU lotto</h1>
       <p>Click on or enter the numbers as they are drawn to filter down the list. Does not filter on the multiplier ball.</p>
       <p>Click on filters to remove them.</p>
-      <SearchForm filterValue={currentFilter} clearHandler={clearFilters} changeHandler={changeHandler} submitHandler={submitHandler}/>
-      <Filters handleCardClick={handleCardClick} filters={filters} numbers={filters} />
+      <Filters
+        handleCardClick={handleCardClick}
+        filterValue={currentFilter}
+        clearFilters={clearFilters}
+        changeHandler={changeHandler}
+        submitHandler={submitHandler}
+        clearHandler={clearFilters}
+        filters={filters}
+        numbers={filters}
+        />
       <Entries handleCardClick={handleCardClick} entries={entries} filters={filters}/>
     </div>
   );
 }
-
-
 
 export default App;

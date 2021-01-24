@@ -12,13 +12,10 @@ table {
   border-collapse: collapse;
 }
 
-div.number-card:last-of-type {
+div.entries div.number-card:last-of-type {
   border-left: 3px double black;
-}
-
-/* override the multiball highlighting on the filters row */
-div.filters div.number-card { 
-  border-left: none;
+  margin-left: 20px;
+  padding-left: 20px;
 }
 
 div.number-card {
@@ -34,6 +31,24 @@ div.number {
   width: 3em;
   line-height: 3em;
   background-color: tan;
+  border-radius: 1.6em;
+}
+
+input[type='text'] {
+  border: 3px solid grey;
+  height: 3em;
+  width: 3em;
+  line-height: 3em;
+  font-size: 1em;
+  text-align: center;
+}
+
+input[type='button'] {
+  height: 3em;
+  font-size: 1em;
+  border: 3px solid grey;
+  border-radius: .5em;
+  margin-left: 7px;
 }
 
 div.filters {
@@ -55,6 +70,7 @@ div.number-x {
   text-align: right;
   padding-right: .4em;
   cursor: pointer;
+  border-radius: 1.6em;
 }
 
 div.filter-0 {
@@ -71,4 +87,8 @@ div.filter-3 {
 }
 div.filter-4 {
   border: 3px solid purple;
+}
+
+form, div.number-cards {
+  display: inline-block;
 }
