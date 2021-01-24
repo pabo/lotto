@@ -2,15 +2,6 @@ import './App.css';
 import entries from './entries';
 import {useState} from 'react';
 
-
-
-const Filters = (props) => {
-  return <div>
-    Filters:
-    {props.filters.join(", ")}
-  </div>
-}
-
 const SearchForm = (props) => {
   return <form onSubmit = {props.submitHandler}>
     <input type='text' onChange={props.changeHandler} value={props.filterValue}></input>
@@ -18,42 +9,51 @@ const SearchForm = (props) => {
   </form>
 }
 
-const Entry = (props) => {
-  return <tr>
-    {props.numbers.map((number) => {
-      return <td>{number}</td>
-    })}
-  </tr>
+const Filters = (props) => {
+  return <div className='filters'>
+    <h3>Filters</h3>
+    {props.numbers.length ?
+      <NumberCards handleCardClick={props.handleCardClick} {...props} /> :
+      <span>(none)</span>
+    }
+  </div>
 }
 
-const Entries = (props) => {
+const NumberCards = (props) => {
+  return <div>
+    {props.numbers.map((number) => {
+      return <NumberCard handleCardClick={props.handleCardClick} number={number} />
+    })}
+  </div>
+}
 
+const NumberCard = (props) => {
+      return (
+          <div className='number-card'>
+            <div className='number-x' onClick={props.handleCardClick}>x</div>
+            <div className='number' onClick={props.handleCardClick}>{props.number}</div>
+        </div>
+        );
+};
+
+const Entries = (props) => {
   const filteredEntries = props.entries.filter((entry) => {
-    console.log("filters are", props.filters)
     return props.filters.every((filter) => {
-      console.log("checking entry", entry);
-      console.log("with filter", filter);
       const [one, two, three, four, five, multiball] = entry;
 
       return filter === "" || [one, two, three, four, five].includes(filter);
     })
   }) 
 
-  return <table>
-    <tbody>
-      <tr>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>multi</th>
-      </tr>
-    {filteredEntries.map((entry) => {
-      return <Entry key={entry} numbers={entry} />
-    })}
-    </tbody>
-  </table>
+  return <div>
+    <h3>Entries</h3>
+    { filteredEntries.length ? 
+      filteredEntries.map((entry) => {
+      return <NumberCards handleCardClick={props.handleCardClick} key={entry} numbers={entry} />
+    }) :
+    <span>(none)</span>
+  }
+  </div>
 }
 
 const App = () => {
@@ -76,14 +76,29 @@ const App = () => {
     setCurrentFilter("");
   }
 
+  const handleCardClick = (e) => {
+    const value = e.target.classList.contains('number') ?
+      e.target.innerText :
+      e.target.nextSibling.innerText;
+
+    if (e.target.closest('div.filters')) {
+      // is a filter
+      setFilters(filters.filter(x => x !== value))
+    }
+    else {
+      // is not a filter
+      setFilters([...filters, value]);
+    }
+
+  }
+
   return (
     <div>
       <h1>IPU lotto</h1>
       <p>Enter the numbers as they are drawn to filter down the list. Does not filter on the multiplier ball.</p>
       <SearchForm filterValue={currentFilter} clearHandler={clearFilters} changeHandler={changeHandler} submitHandler={submitHandler}/>
-      {/* <Entries entries={entries} filters={[...filters, currentFilter]}/> // this causes flashing during typing, so disabled for now*/} 
-      <Entries entries={entries} filters={filters}/>
-      <Filters filters={filters} currentFilter={currentFilter}/>
+      <Filters handleCardClick={handleCardClick} numbers={filters} />
+      <Entries handleCardClick={handleCardClick} entries={entries} filters={filters}/>
     </div>
   );
 }
