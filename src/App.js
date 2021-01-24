@@ -22,18 +22,20 @@ const Filters = (props) => {
 const NumberCards = (props) => {
   return <div>
     {props.numbers.map((number) => {
-      return <NumberCard handleCardClick={props.handleCardClick} number={number} />
+      return <NumberCard {...props}  number={number} />
     })}
   </div>
 }
 
 const NumberCard = (props) => {
-      return (
-          <div className='number-card'>
-            <div className='number-x' onClick={props.handleCardClick}>x</div>
-            <div className='number' onClick={props.handleCardClick}>{props.number}</div>
-        </div>
-        );
+  const filterNumber = props.filters.indexOf(props.number);
+
+  return (
+      <div className='number-card'>
+        <div className='number-x' onClick={props.handleCardClick}>x</div>
+        <div className={`number filter-${filterNumber}`} onClick={props.handleCardClick}>{props.number}</div>
+    </div>
+    );
 };
 
 const Entries = (props) => {
@@ -49,7 +51,7 @@ const Entries = (props) => {
     <h3>Entries</h3>
     { filteredEntries.length ? 
       filteredEntries.map((entry) => {
-      return <NumberCards handleCardClick={props.handleCardClick} key={entry} numbers={entry} />
+      return <NumberCards {...props} key={entry} numbers={entry}  />
     }) :
     <span>(none)</span>
   }
@@ -72,7 +74,7 @@ const App = () => {
   const submitHandler = (e) => {
     e.preventDefault();
   
-    setFilters([...filters, currentFilter]);
+    setFilters(Array.from(new Set([...filters, currentFilter])));
     setCurrentFilter("");
   }
 
@@ -82,22 +84,22 @@ const App = () => {
       e.target.nextSibling.innerText;
 
     if (e.target.closest('div.filters')) {
-      // is a filter
+      // clickd on a filter; remove it
       setFilters(filters.filter(x => x !== value))
     }
     else {
-      // is not a filter
-      setFilters([...filters, value]);
+      // clicked on non-a-filter, add as filter
+      setFilters(Array.from(new Set([...filters, value])));
     }
-
   }
 
   return (
     <div>
       <h1>IPU lotto</h1>
-      <p>Enter the numbers as they are drawn to filter down the list. Does not filter on the multiplier ball.</p>
+      <p>Click on or enter the numbers as they are drawn to filter down the list. Does not filter on the multiplier ball.</p>
+      <p>Click on filters to remove them.</p>
       <SearchForm filterValue={currentFilter} clearHandler={clearFilters} changeHandler={changeHandler} submitHandler={submitHandler}/>
-      <Filters handleCardClick={handleCardClick} numbers={filters} />
+      <Filters handleCardClick={handleCardClick} filters={filters} numbers={filters} />
       <Entries handleCardClick={handleCardClick} entries={entries} filters={filters}/>
     </div>
   );
