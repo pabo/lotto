@@ -1,14 +1,10 @@
 import {observer} from 'mobx-react';
-import {autorun} from 'mobx';
 
 import './App.css';
 import entries from './entries';
 import LottoStore from './LottoStore';
 
 const store = window.lottoStore = LottoStore;
-autorun(() => {
-  console.log("currentFilter is ", store.currentFilter);
-})
 
 const Entries = (props) => {
   const filteredEntries = props.entries.filter((entry) => {
