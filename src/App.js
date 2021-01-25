@@ -1,10 +1,14 @@
 import {observer} from 'mobx-react';
+import {autorun} from 'mobx';
 
 import './App.css';
 import entries from './entries';
 import LottoStore from './LottoStore';
 
 const store = window.lottoStore = LottoStore;
+autorun(() => {
+  console.log("currentFilter is ", store.currentFilter);
+})
 
 const Entries = (props) => {
   const filteredEntries = props.entries.filter((entry) => {
@@ -45,12 +49,12 @@ const NumberCard = (props) => {
     );
 };
 
-const SearchForm = (props) => {
+const SearchForm = observer((props) => {
   return <form onSubmit = {store.submitHandler}>
-    <input type='text' placeholder="add" onChange={store.changeHandler} value={props.filterValue}></input>
+    <input type='text' placeholder="add" onChange={store.changeHandler} value={store.currentFilter}></input>
     <input type='button' value='Clear Filters' onClick={store.clearHandler}></input>
   </form>
-}
+})
 
 const Filters = (props) => {
   return <div className='filters'>
@@ -66,10 +70,7 @@ const App = observer(() => {
       <h1>IPU lotto</h1>
       <p>Click on or enter the numbers as they are drawn to filter down the list. Does not filter on the multiplier ball.</p>
       <p>Click on filters to remove them.</p>
-      <Filters
-        filterValue={store.currentFilter}
-        numbers={[...store.filters]}
-        />
+      <Filters numbers={[...store.filters]} />
       <Entries entries={entries}/>
     </div>
   );
