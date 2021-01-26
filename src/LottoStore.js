@@ -1,39 +1,73 @@
-import {extendObservable} from 'mobx';
+import {makeAutoObservable} from 'mobx';
+
+const INDEX_OF_MULTIBALL = 5;
 
 class LottoStore {
-  constructor() {
-    extendObservable(this, {
-      filters: [],
-      currentFilter: "",
-      handleCardClick: (e) => {
-        const value = e.target.classList.contains('number') ?
-          e.target.innerText :
-          e.target.nextSibling.innerText;
+    constructor() {
+        makeAutoObservable(this);
+    };
 
-        if (e.target.closest('div.filters')) {
-          // clickd on a filter; remove it
-          this.filters = this.filters.filter(x => x !== value);
+    filters = [];
+    multiFilter = null;
+    currentFilter = '';
+    hideNonMatching = true;
+
+    handleToggle = (e) => {
+        this.hideNonMatching = e.target.checked;
+    }
+
+    removeFilter = (value, isMulti) => {
+        console.log("removing", value)
+        console.log("isMulti", isMulti)
+        if (isMulti) {
+            this.multiFilter = undefined;
         }
         else {
-          // clicked on non-a-filter, add as filter
-          this.filters.push(value);
+            this.filters = this.filters.filter(x => x !== value);
         }
-      },
-      clearHandler: () => {
+    }
+
+    addFilter = (value, isMulti) => {
+        if (isMulti) {
+            this.multiFilter = value;
+        }
+        else {
+            this.filters = Array.from(new Set([...this.filters, value]));
+        }
+    }
+
+    handleFilterClick = (e, isMulti) => {
+        const value = e.target.getAttribute('data-value');
+
+        this.removeFilter(value, isMulti);
+    }
+
+    handleCardClick = (e, isMulti) => {
+        if (!isMulti && this.filters.length >= INDEX_OF_MULTIBALL) {
+            return;
+        }
+
+        const value = e.target.getAttribute('data-value');
+
+        this.addFilter(value, isMulti);
+    };
+
+    clearState = () => {
         this.filters = [];
         this.currentFilter = "";
-      },
-      changeHandler: (e) => {
+        this.multiFilter = undefined;
+    };
+
+    changeHandler = (e) => {
         this.currentFilter = e.target.value;
-      },
-      submitHandler: (e) => {
+    };
+
+    submitHandler = (e) => {
         e.preventDefault();
-  
-        this.filters.push(this.currentFilter);
+
+        this.addFilter(this.currentFilter);
         this.currentFilter = "";
-      }
-    });
-  }
+    };
 }
 
 export default new LottoStore();

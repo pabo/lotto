@@ -12,10 +12,10 @@ table {
   border-collapse: collapse;
 }
 
-div.entries div.number-card:last-of-type {
+div.number-card.multi {
   border-left: 3px double black;
-  margin-left: 20px;
-  padding-left: 20px;
+  margin-left: 10px;
+  padding-left: 10px;
 }
 
 div.number-card {
@@ -31,13 +31,18 @@ div.entries div.number-cards {
   background-color: rgb(230, 231, 214);
 }
 
-div.number {
+div.number-card-inner {
   border: 3px solid grey;
   height: 3em;
   width: 3em;
   line-height: 3em;
   background-color: tan;
   border-radius: 1.6em;
+  cursor: pointer;
+}
+
+div.number-card-inner.multi {
+  background-color: rgb(202, 178, 70);
 }
 
 input[type='text'] {
@@ -75,8 +80,8 @@ div.number-x {
   width: 2.6em;
   text-align: right;
   padding-right: .4em;
-  cursor: pointer;
   border-radius: 1.6em;
+  cursor: pointer;
 }
 
 div.filter-0 {
@@ -95,6 +100,14 @@ div.filter-4 {
   border: 3px solid purple;
 }
 
+div.filter-multi {
+  border: 3px solid brown;
+}
+
 form, div.number-cards {
   display: inline-block;
 }
+
+/* div.number-cards {
+  width: 500px;
+} */
