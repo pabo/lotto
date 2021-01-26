@@ -65,7 +65,13 @@ class LottoStore {
     submitHandler = (e) => {
         e.preventDefault();
 
-        this.addFilter(this.currentFilter);
+        let paddedCurrentFilter = this.currentFilter;
+
+        if (this.currentFilter.length === 1) {
+           paddedCurrentFilter = `0${this.currentFilter}` ;
+        }
+
+        this.addFilter(paddedCurrentFilter);
         this.currentFilter = "";
     };
 }

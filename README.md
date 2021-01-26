@@ -15,5 +15,6 @@ A way to check for winning lottery tickets
 
 ### Bugs
 
+- ~~single digit filters~~
 - ~~multiball highlights with normal balls~~
 - (?) can't type a multiball filter, must click
