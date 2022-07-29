@@ -2,7 +2,7 @@
 A way to check for winning lottery tickets
 
 ## Live
-[Live version on gh-pages](https://pago.github.io/lotto)
+[Live version on gh-pages](https://pabo.github.io/lotto)
 
 ### Todo
 
