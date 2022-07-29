@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/lotto/static/css/main.64fbd6b0.chunk.css",
-    "main.js": "/lotto/static/js/main.c8bacdce.chunk.js",
-    "main.js.map": "/lotto/static/js/main.c8bacdce.chunk.js.map",
+    "main.js": "/lotto/static/js/main.c5fe53b8.chunk.js",
+    "main.js.map": "/lotto/static/js/main.c5fe53b8.chunk.js.map",
     "runtime-main.js": "/lotto/static/js/runtime-main.28804446.js",
     "runtime-main.js.map": "/lotto/static/js/runtime-main.28804446.js.map",
     "static/js/2.b994ad9e.chunk.js": "/lotto/static/js/2.b994ad9e.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.28804446.js",
     "static/js/2.b994ad9e.chunk.js",
     "static/css/main.64fbd6b0.chunk.css",
-    "static/js/main.c8bacdce.chunk.js"
+    "static/js/main.c5fe53b8.chunk.js"
   ]
 }
