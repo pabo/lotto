@@ -6,6 +6,7 @@ A way to check for winning lottery tickets
 
 ### Todo
 
+- only runs on hella old node v16
 - sort by number of matches
 - (?) flexbox
 - align multiball filter with entries multiball
