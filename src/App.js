@@ -84,7 +84,7 @@ const Filters = observer((props) => {
 const App = () => {
   return (
     <div>
-      <h1>IPU lotto</h1>
+      <h1>The lion does not win lotteries</h1>
       <p>Click on numbers or enter the numbers to filter down the list.</p>
       <p>Click on filters to remove them.</p>
       <Filters />
